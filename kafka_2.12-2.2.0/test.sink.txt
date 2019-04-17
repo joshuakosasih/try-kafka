@@ -1,0 +1,7 @@
+foo
+bar
+hum
+
+Another line
+Second line
+Third line

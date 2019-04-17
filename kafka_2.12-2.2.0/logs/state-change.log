@@ -1,0 +1,1 @@
+[2019-04-17 12:38:38,116] TRACE [Broker id=2] Cached leader info PartitionState(controllerEpoch=1, leader=0, leaderEpoch=0, isr=[0], zkVersion=0, replicas=[0], offlineReplicas=[]) for partition connect-test-0 in response to UpdateMetadata request sent by controller 0 epoch 1 with correlation id 7 (state.change.logger)
