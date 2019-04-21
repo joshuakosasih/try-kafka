@@ -1,3 +1,7 @@
 kafka_2.12-2.2.0/logs/*
 *.class
 *.jar
+twitterkafka/target/*
+streams.examples/target/*
+*/.idea/workspace.xml
+*/.idea/tasks.xml
