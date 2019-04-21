@@ -14,17 +14,16 @@ public class KafkaTwitterProducer {
 
         if (args.length < 4) {
             System.out.println(
-                    "Usage: KafkaTwitterProducer <twitter-consumer-key> <twitter-consumer-secret> <twitter-access-token> <twitter-access-token-secret> <topic-name> <twitter-search-keywords>");
+                    "Usage: KafkaTwitterProducer <twitter-consumer-key> <twitter-consumer-secret> <twitter-access-token> <twitter-access-token-secret> <twitter-search-keywords>");
             return;
         }
 
-        String consumerKey = args[0].toString();
-        String consumerSecret = args[1].toString();
-        String accessToken = args[2].toString();
-        String accessTokenSecret = args[3].toString();
-        String topicName = args[4].toString();
+        String consumerKey = args[0];
+        String consumerSecret = args[1];
+        String accessToken = args[2];
+        String accessTokenSecret = args[3];
         String[] arguments = args.clone();
-        String[] keyWords = Arrays.copyOfRange(arguments, 5, arguments.length);
+        String[] keyWords = Arrays.copyOfRange(arguments, 4, arguments.length);
 
         // Set twitter oAuth tokens in the configuration
         ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -78,8 +77,7 @@ public class KafkaTwitterProducer {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        Producer<String, String> producer = new KafkaProducer<String, String>(props);
-        int i = 0;
+        Producer<String, String> producer = new KafkaProducer<>(props);
         int j = 0;
 
         // poll for new tweets in the queue. If new tweets are added, send them
@@ -89,14 +87,12 @@ public class KafkaTwitterProducer {
 
             if (ret == null) {
                 Thread.sleep(100);
-                // i++;
             } else {
+                System.out.println("Tweet:" + ret);
+                producer.send(new ProducerRecord<>("tweets", Integer.toString(j++), ret.getText()));
                 for (HashtagEntity hashtage : ret.getHashtagEntities()) {
-                    System.out.println("Tweet:" + ret);
                     System.out.println("Hashtag: " + hashtage.getText());
-                    // producer.send(new ProducerRecord<String, String>(
-                    // topicName, Integer.toString(j++), hashtage.getText()));
-                    producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(j++), ret.getText()));
+                    producer.send(new ProducerRecord<>("hashtags", Integer.toString(j++), hashtage.getText()));
                 }
             }
         }
