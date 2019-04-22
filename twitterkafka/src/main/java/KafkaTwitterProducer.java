@@ -90,9 +90,15 @@ public class KafkaTwitterProducer {
             } else {
                 System.out.println("Tweet:" + ret);
                 producer.send(new ProducerRecord<>("tweets", Integer.toString(j++), ret.getText()));
+                System.out.println("User:" + ret.getUser().getScreenName());
+                producer.send(new ProducerRecord<>("tw-users", Integer.toString(j++), ret.getUser().getScreenName()));
                 for (HashtagEntity hashtage : ret.getHashtagEntities()) {
                     System.out.println("Hashtag: " + hashtage.getText());
                     producer.send(new ProducerRecord<>("hashtags", Integer.toString(j++), hashtage.getText()));
+                }
+                for (UserMentionEntity userMention : ret.getUserMentionEntities()) {
+                    System.out.println("User mentioned: " + userMention.getScreenName());
+                    producer.send(new ProducerRecord<>("tw-mentioned-users", Integer.toString(j++), userMention.getScreenName()));
                 }
             }
         }
