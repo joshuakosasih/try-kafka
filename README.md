@@ -1,5 +1,12 @@
 # try-kafka
 
+I've created this repo in my attempt to try and understand bits of Apache Kafka.
+I've also created several short scripts that I found to be useful in trying and testing the platform:
+- run.sh (to quickstart kafka server with basic configuration)
+- newtopic.sh (to add new topic(s) to the server)
+- newproducer.sh (to create a new basic producer)
+- newconsumer.sh (to create a new basic consumer)
+- etc
 
 ### Kafka
 Apache Kafka® is a distributed streaming platform. It is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, wicked fast, and runs in production in thousands of companies.
